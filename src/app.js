@@ -2,6 +2,8 @@ import express from "express"
 const app = express();
 import cookieParser from "cookie-parser";
 import cors from "cors"
+import userRouter from "./routes/user.route.js";
+
 
 app.use(cors(
     {
@@ -23,5 +25,11 @@ app.use(express.urlencoded({
 
 app.use(express.static("public")) // files folder store images jisko koi bhi excess kar saktha hai 
 app.use(cookieParser( ))
+
+
+
+
+//routes
+app.use("/users", userRouter)
 
 export {app}
