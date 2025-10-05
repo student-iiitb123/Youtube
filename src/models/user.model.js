@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import bcrypt from "bcrypt";
-import { JsonWebToken } from "jsonwebtoken";
+import  JsonWebToken  from "jsonwebtoken";
+import  app  from "../app.js";
 
 const userSchema = mongoose.Schema({
   username : {
@@ -48,19 +49,19 @@ const userSchema = mongoose.Schema({
     requried: [true,'Password is requried']
  },
  refreshToken: {
-    type: string
+    type: String
  },
 
 },
 {
     timestamps : true
 }
-)
+);
 // auto generate password  using bcrypt
-app.pre("save", function(next){
+userSchema.pre("save", async function(next){
     //we want t compare is our password is modified or not 
     if(!this.isModified(this.password))  return next();
- this.password =   bcrypt.hash(this.password, 10);
+ this.password = await  bcrypt.hash(this.password, 10);
     next();
 
 })
